@@ -2,6 +2,7 @@ import json
 import re 
 import os 
 import requests 
+import sys 
 
 """
 Get stock code through shdjt.com
@@ -28,10 +29,12 @@ class StockCodeSHDJT(object):
         
         response_text = requests.get("http://www.shdjt.com/js/lib/astock.js").text 
         raw_list = response_text.split("~")
+        raw_list[-1] = raw_list[-1][:-1]
         res = []
-        for item in raw_list:
-            if item.startsiwth("~"):
-                single_stock_split = item[1:].split("`")
-                assert(len(single_stock_split) == 3, "Stock split should have three items")
-                res.append(single_stock_split)
+        for i in range(1, len(raw_list)):
+            item = raw_list[i]
+            single_stock_split = item.split("`")
+            print(single_stock_split)
+            assert len(single_stock_split) == 3, "Stock split should have three items" 
+            res.append(single_stock_split)
         return res
