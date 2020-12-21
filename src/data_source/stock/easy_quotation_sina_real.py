@@ -187,7 +187,7 @@ def job(index, stock_list, date, path, queue):
                 cur_index += 1
         except:
             queue.put(traceback.format_exc())
-        time.sleep(1)
+        time.sleep(1.5)
 
 def main():
     """
