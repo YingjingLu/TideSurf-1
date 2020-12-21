@@ -68,6 +68,7 @@ class Getter(object):
     def __init__(self, stock_list): 
         self._session = requests.session()
         self.stock_list = self.gen_stock_list(stock_list)
+        print(self.stock_list)
 
     def get_stocks_by_range(self, params):
         headers = {

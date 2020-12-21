@@ -34,7 +34,6 @@ class StockCodeSHDJT(object):
         for i in range(1, len(raw_list)):
             item = raw_list[i]
             single_stock_split = item.split("`")
-            print(single_stock_split)
             assert len(single_stock_split) == 3, "Stock split should have three items" 
             res.append(single_stock_split)
         return res
