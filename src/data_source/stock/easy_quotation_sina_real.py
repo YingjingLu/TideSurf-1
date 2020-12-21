@@ -184,6 +184,7 @@ def job(index, stock_list, date, path, queue):
                     pickle.dump(cur_buf_list, file)
                 cur_buf_list.clear()
                 cur = 0
+                cur_index += 1
         except:
             queue.put(traceback.format_exc())
         time.sleep(1)
@@ -193,11 +194,11 @@ def main():
     Driver function that establishes connection and report failures
     """
     assert len(sys.argv) == 3, "Sys args must have 3 arguments"
-    [_, logging_path, num_stock_per_process] = sys.argv 
-    num_stock_per_process = int(num_stock_per_process)
+    [_, logging_path, num_process] = sys.argv 
+    num_process = int(num_process)
     stock_list = StockCodeSHDJT().get_list()
-    
-    num_process = math.ceil(len(stock_list) / num_stock_per_process)
+
+    num_stock_per_process = math.ceil(len(stock_list) / num_process)
     dt = datetime.fromtimestamp(int(time.time()),
             pytz.timezone('Asia/Shanghai'))
 
