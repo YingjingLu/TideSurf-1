@@ -204,7 +204,7 @@ def main():
 
     date = "{}-{}-{}".format(dt.year, format_number(dt.month), format_number(dt.day))
 
-    with open("{}.json".format(date), "w", encoding="utf-8") as f:
+    with open("{}/stock_list_{}.json".format(logging_path, date), "w", encoding="utf-8") as f:
         json.dump(dict(stocks=stock_list), f)
 
     failure_queue = Queue()
