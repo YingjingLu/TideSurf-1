@@ -5,7 +5,7 @@ Input Args:
 
 sys.argv:
 1 - logging_path
-3 - number of stocks per process
+3 - number of process
 
 Outputs:
 Crawling results stored in a form of
@@ -50,6 +50,27 @@ def get_stock_type(stock_code):
         return stock_code[:2]
     else:
         return "sh" if stock_code.startswith(sh_head) else "sz"
+
+def is_in_trade_hour():
+    """
+    morning hours: 
+        9:15 - 11:30
+    Afternoon hours:
+        13:00 - 15:05
+    """
+    new_dt = datetime.fromtimestamp(int(time.time()),
+            pytz.timezone('Asia/Shanghai'))
+    if (new_dt.hour < 9 or new_dt.hour > 15):
+        return False 
+    if (12 <= new_dt.hour < 13):
+        return False 
+    if (new_dt.hour == 9 and new_dt.minute < 15):
+        return False 
+    if (new_dt.hour == 11 and new_dt.minute > 30):
+        return False 
+    if (new_dt.hour == 15 and new_dt.minute > 5):
+        return False 
+    return True
 
 class Getter(object):
     max_num = 800
@@ -176,18 +197,19 @@ def job(index, stock_list, date, path, queue):
     cur = 0
     cur_buf_list = []
     while (True):
-        try:
-            res = getter.get_stock_data()
-            cur_buf_list.append(res)
-            cur += 1
-            if (cur == 20):
-                with open ("{}/{}_{}-{}.pkl".format(path, date, index, cur_index), "wb") as file:
-                    pickle.dump(cur_buf_list, file)
-                cur_buf_list.clear()
-                cur = 0
-                cur_index += 1
-        except:
-            queue.put(traceback.format_exc())
+        if is_in_trade_hour():
+            try:
+                res = getter.get_stock_data()
+                cur_buf_list.append(res)
+                cur += 1
+                if (cur == 20):
+                    with open ("{}/{}_{}-{}.pkl".format(path, date, index, cur_index), "wb") as file:
+                        pickle.dump(cur_buf_list, file)
+                    cur_buf_list.clear()
+                    cur = 0
+                    cur_index += 1
+            except:
+                queue.put(traceback.format_exc())
         time.sleep(1.5)
 
 def main():
