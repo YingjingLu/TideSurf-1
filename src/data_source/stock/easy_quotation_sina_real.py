@@ -202,7 +202,7 @@ def job(index, stock_list, date, path, queue):
                 res = getter.get_stock_data()
                 cur_buf_list.append(res)
                 cur += 1
-                if (cur == 500):
+                if (cur == 300):
                     with open ("{}/{}_{}-{}.pkl".format(path, date, index, cur_index), "wb") as file:
                         pickle.dump(cur_buf_list, file)
                     cur_buf_list.clear()
