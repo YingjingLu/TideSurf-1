@@ -202,7 +202,7 @@ def job(index, stock_list, date, path, queue):
                 res = getter.get_stock_data()
                 cur_buf_list.append(res)
                 cur += 1
-                if (cur == 20):
+                if (cur == 500):
                     with open ("{}/{}_{}-{}.pkl".format(path, date, index, cur_index), "wb") as file:
                         pickle.dump(cur_buf_list, file)
                     cur_buf_list.clear()
@@ -210,6 +210,14 @@ def job(index, stock_list, date, path, queue):
                     cur_index += 1
             except:
                 queue.put(traceback.format_exc())
+        else:
+            if len(cur_buf_list) != 0:
+                with open ("{}/{}_{}-{}.pkl".format(path, date, index, cur_index), "wb") as file:
+                        pickle.dump(cur_buf_list, file)
+                cur_buf_list.clear()
+                cur = 0
+                cur_index += 1
+
         time.sleep(1.5)
 
 def main():
