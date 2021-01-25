@@ -1,2 +1,5 @@
 easyquotation
 pytz
+pandas 
+requests 
+

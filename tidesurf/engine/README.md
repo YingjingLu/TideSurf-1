@@ -33,3 +33,44 @@ There are different types of data engine depending on the algorithm for assist t
 * Generate response for client requests
 * Generate push for client page
 * Maintainning online clients states
+
+
+
+# Engine file 
+
+```
+.
+picked_stocks.json
++-- 2020-12-23
+|   +-- stock_list_2020-12-23.json
+|   +-- 000001.pkl
+|   +-- 000002.pkl
+|   +-- 000003.pkl
+|   +-- 000004.pkl
+```
+
+
+
+### Config file
+picked_stocks.json
+```json
+[
+    "000001",
+    "000002",
+    "000003",
+    "000004"
+]
+```
+
+# Data file
+```
+.
++-- 2020-12-23
+|   +-- stock_list_2020-12-23.json
+|   +-- 000001.pkl
+|   +-- 000002.pkl
+|   +-- 000003.pkl
+|   +-- 000004.pkl
+
+```
+

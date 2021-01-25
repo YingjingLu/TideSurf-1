@@ -1,0 +1,5 @@
+{
+    "engine_data_folder_path": "/home/ubuntu/engine",
+    "data_folder_path": "/home/ubuntu/data",
+    "num_stock_data_process": 8
+}
